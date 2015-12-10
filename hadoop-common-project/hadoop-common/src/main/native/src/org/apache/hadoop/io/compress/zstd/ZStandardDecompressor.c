@@ -78,13 +78,7 @@ static __dlsym_ZSTD_flushStream dlsym_ZSTD_flushStream;
 JNIEXPORT void JNICALL Java_org_apache_hadoop_io_compress_zstd_ZStandardDecompressor_initIDs (JNIEnv *env, jclass clazz) {
     // Load libzstd.so
 #ifdef UNIX
-    void *libzstd = dlopen(HADOOP_ZSTD_LIBRARY, RTLD_LAZY | RTLD_GLOBAL);
-    if (!libzstd) {
-        char* msg = (char*)malloc(1000);
-        snprintf(msg, 1000, "%s (%s)!", "Cannot load " HADOOP_ZSTD_LIBRARY, dlerror());
-        THROW(env, "java/lang/UnsatisfiedLinkError", msg);
-        return;
-    }
+    void *libzstd = RTLD_DEFAULT;
 #endif
 
 #ifdef WINDOWS

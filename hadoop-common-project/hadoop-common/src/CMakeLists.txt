@@ -50,7 +50,9 @@ get_filename_component(HADOOP_ZLIB_LIBRARY ${ZLIB_LIBRARIES} NAME)
 
 # Look for bzip2.
 set(STORED_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
-hadoop_set_find_shared_library_version("1")
+if (NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    hadoop_set_find_shared_library_version("1")
+endif()
 find_package(BZip2 QUIET)
 if(BZIP2_INCLUDE_DIR AND BZIP2_LIBRARIES)
     get_filename_component(HADOOP_BZIP2_LIBRARY ${BZIP2_LIBRARIES} NAME)

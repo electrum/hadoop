@@ -82,13 +82,7 @@ static __dlsym_ZSTD_getErrorName dlsym_ZSTD_getErrorName;
 JNIEXPORT void JNICALL Java_org_apache_hadoop_io_compress_zstd_ZStandardCompressor_initIDs (JNIEnv *env, jclass clazz) {
 #ifdef UNIX
     // Load libzstd.so
-    void *libzstd = dlopen(HADOOP_ZSTD_LIBRARY, RTLD_LAZY | RTLD_GLOBAL);
-    if (!libzstd) {
-        char* msg = (char*)malloc(10000);
-        snprintf(msg, 10000, "%s (%s)!", "Cannot load " HADOOP_ZSTD_LIBRARY, dlerror());
-        THROW(env, "java/lang/InternalError", msg);
-        return;
-    }
+    void *libzstd = RTLD_DEFAULT;
 #endif
 
 #ifdef WINDOWS
